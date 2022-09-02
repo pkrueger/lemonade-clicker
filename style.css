@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Press Start 2P";
+  src: url("Press_Start_2P/PressStart2P-Regular.ttf");
+}
+
 :root {
   --theme-primary: #fff8c0;
 }
@@ -10,4 +15,5 @@ body {
 .stand {
   user-select: none;
   cursor: pointer;
+  width: 100%;
 }
