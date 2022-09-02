@@ -22,13 +22,36 @@
       crossorigin="anonymous"
       defer
     ></script>
+    <link
+      rel="shortcut icon"
+      href="assets/lemon-solid.svg"
+      type="image/x-icon"
+    />
     <link rel="stylesheet" href="style.css" />
-    <script src="app.js"></script>
-    <title>Document</title>
+    <script src="app.js" defer></script>
+    <title>Lemonade Clicker</title>
   </head>
   <body>
     <header></header>
-    <main></main>
+    <main>
+      <section class="container game-container">
+        <div class="row">
+          <div class="col-md-4">
+            <img
+              src="assets/stand.png"
+              alt="Your lemonade stand"
+              class="img-fluid stand"
+              onclick="getThatGreen()"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p>$<span id="amountOfMoney">0</span></p>
+          </div>
+        </div>
+      </section>
+    </main>
     <footer></footer>
   </body>
 </html>

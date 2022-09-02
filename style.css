@@ -1,0 +1,13 @@
+:root {
+  --theme-primary: #fff8c0;
+}
+
+body {
+  background-color: var(--theme-primary);
+  font-family: "Press Start 2P", cursive;
+}
+
+.stand {
+  user-select: none;
+  cursor: pointer;
+}
