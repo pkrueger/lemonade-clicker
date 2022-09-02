@@ -5,11 +5,14 @@
 
 :root {
   --theme-primary: #fff8c0;
+  --theme-secondary: #ec8a4b;
+  --theme-tertiary: #ffcc68;
 }
 
 body {
   background-color: var(--theme-primary);
   font-family: "Press Start 2P", cursive;
+  color: var(--theme-secondary);
 }
 
 .stand {
