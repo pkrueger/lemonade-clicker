@@ -21,7 +21,7 @@
   </head>
   <body>
     <header class="py-3 py-md-5">
-      <h1 class="text-center py-md-5">Lemonade Clicker</h1>
+      <h1 class="text-center">Lemonade Clicker</h1>
     </header>
 
     <main class="px-3">
@@ -30,7 +30,7 @@
         class="container game-container d-flex flex-column justify-content-between"
       >
         <div class="row justify-content-center">
-          <div class="col-9 col-md-4 pb-4 pb-md-5">
+          <div class="col-9 col-md-3 pb-4 pb-md-5">
             <img
               src="assets/stand.png"
               alt="Your lemonade stand"
@@ -140,5 +140,9 @@
         </div>
       </section>
     </main>
+    <footer>
+      <div>Total Cash: $<span id="totalCash"></span></div>
+      <button class="reset" onclick="reset()">RESET</button>
+    </footer>
   </body>
 </html>

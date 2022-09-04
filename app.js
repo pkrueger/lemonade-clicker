@@ -3,6 +3,14 @@
 // Globals
 let money = {
   cash: 0,
+  totalCash: 0,
+  cashPerClick: 1,
+  cashPerInterval: 0,
+};
+
+const moneyDefault = {
+  cash: 0,
+  totalCash: 0,
   cashPerClick: 1,
   cashPerInterval: 0,
 };
@@ -38,8 +46,46 @@ let upgrades = {
   ],
   goCorporate: {
     name: "corporate sponsorship",
-    quantity: 0,
-    multiplier: 1.1,
+    available: 0,
+    multiplier: 1,
+    cost: 100,
+  },
+};
+
+const upgradesDefault = {
+  clickUpgrades: [
+    {
+      name: "extra juicer",
+      quantity: 0,
+      cashValue: 1,
+      cost: 20,
+    },
+    {
+      name: "new flavor",
+      quantity: 0,
+      cashValue: 4,
+      cost: 20,
+    },
+  ],
+  autoUpgrades: [
+    {
+      name: "advertisement",
+      quantity: 0,
+      cashPerIntervalValue: 1,
+      cost: 20,
+    },
+    {
+      name: "open new stand",
+      quantity: 0,
+      cashPerIntervalValue: 4,
+      cost: 20,
+    },
+  ],
+  goCorporate: {
+    name: "corporate sponsorship",
+    available: 0,
+    multiplier: 1,
+    cost: 100,
   },
 };
 
@@ -54,6 +100,7 @@ let cashElem = document.getElementById("amountOfMoney");
 let cashPerClickElem = document.getElementById("cashPerClick");
 let cashPerIntervalElem = document.getElementById("cashPerInterval");
 let progressBarElem = document.getElementById("progressBar");
+let totalCashElem = document.getElementById("totalCash");
 
 let juicerQuantityElem = document.getElementById("juicerQuantity");
 let juicerPriceElem = document.getElementById("juicerPrice");
@@ -78,6 +125,7 @@ function update() {
   cashElem.innerText = money.cash;
   cashPerClickElem.innerText = money.cashPerClick;
   cashPerIntervalElem.innerText = money.cashPerInterval;
+  totalCashElem.innerText = money.totalCash;
 
   juicerQuantityElem.innerText = findUpgrade("extra juicer").quantity;
   juicerPriceElem.innerText = findUpgrade("extra juicer").cost;
@@ -95,16 +143,43 @@ function update() {
   standQuantityElem.innerText = findUpgrade("open new stand").quantity;
   standPriceElem.innerText = findUpgrade("open new stand").cost;
   standValueElem.innerText = findUpgrade("open new stand").cashPerIntervalValue;
+
+  saveLemonade();
+}
+
+function saveLemonade() {
+  window.localStorage.setItem("upgrades", JSON.stringify(upgrades));
+  window.localStorage.setItem("money", JSON.stringify(money));
+}
+
+function loadLemonade() {
+  localUpgrades = JSON.parse(window.localStorage.getItem("upgrades"));
+  localMoney = JSON.parse(window.localStorage.getItem("money"));
+
+  if (
+    localMoney.cash > 0 ||
+    localMoney.cashPerClick > 1 ||
+    localMoney.cashPerInterval > 0
+  ) {
+    money = localMoney;
+    upgrades = localUpgrades;
+
+    if (localMoney.cashPerInterval > 0) {
+      activateInterval();
+    }
+  }
 }
 
 // Click function
 function getThatGreen() {
   money.cash += money.cashPerClick;
+  money.totalCash += money.cashPerClick;
   update();
 }
 
 function autoMoneyGet() {
   money.cash += money.cashPerInterval;
+  money.totalCash += money.cashPerInterval;
   update();
 }
 
@@ -138,6 +213,34 @@ progressBarElem.addEventListener("animationiteration", (event) => {
   autoMoneyGet();
 });
 
+function countUpgrades() {
+  let listOfUpgrades = [...upgrades.clickUpgrades, ...upgrades.autoUpgrades];
+  let upgradeCounter = 0;
+
+  for (upgrade of listOfUpgrades) {
+    if (upgrade.quantity > 0) {
+      upgradeCounter++;
+    }
+  }
+  return upgradeCounter;
+}
+
+function goCorporate() {
+  let upgradeCounter = countUpgrades();
+
+  if (upgradeCounter % 10 == 0) {
+    upgrades.goCorporate.available++;
+  }
+}
+
+function reset() {
+  money = { ...moneyDefault };
+  upgrades = { ...upgradesDefault };
+  progressBarElem.classList.remove("interval-progress-bar");
+  update();
+}
+
+loadLemonade();
 update();
 
 // Go Corporate button needs to remove hidden class from the button and
