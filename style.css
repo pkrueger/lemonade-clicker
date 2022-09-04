@@ -6,7 +6,9 @@
 :root {
   --theme-primary: #fff8c0;
   --theme-secondary: #ec8a4b;
+  --theme-secondary-darker: #d97e45;
   --theme-tertiary: #ffcc68;
+  --r1: 0.5rem;
 }
 
 body {
@@ -19,4 +21,103 @@ body {
   user-select: none;
   cursor: pointer;
   width: 100%;
+}
+
+.stand:active {
+  transform: scale(0.99);
+}
+
+.cash-display {
+  color: var(--theme-primary);
+  user-select: none;
+}
+
+.cash-display > .col-md-2 {
+  padding: 0;
+}
+
+.cash-per-click,
+.cash-per-interval {
+  padding: 1rem;
+  background-color: var(--theme-secondary-darker);
+}
+
+.cash-per-click {
+  border-top-left-radius: var(--r1);
+}
+
+.cash-per-interval {
+  border-top-right-radius: var(--r1);
+}
+
+.amount-of-money {
+  background-color: var(--theme-secondary);
+  padding: 1rem;
+  border-radius: var(--r1) var(--r1) 0 0;
+}
+
+.empty-progress-bar {
+  height: 0.5rem;
+  width: 100%;
+  outline: 0.1rem solid var(--theme-primary);
+}
+
+.interval-progress-bar {
+  height: 0.5rem;
+  background-color: var(--theme-primary);
+  animation-name: progress-bar;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.upgrades-container {
+  background-color: var(--theme-secondary);
+  color: var(--theme-primary);
+  border-radius: var(--r1);
+  padding: 2rem 3rem;
+  user-select: none;
+}
+
+.upgrade {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+h5 {
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+button {
+  border: 0.15rem solid var(--theme-primary);
+  background-color: var(--theme-secondary-darker);
+  color: var(--theme-primary);
+  padding: 0.25rem 1.5rem;
+}
+
+button:active {
+  filter: brightness(97%);
+}
+
+button:focus {
+  border: 0.15rem solid var(--theme-primary);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+}
+
+@keyframes progress-bar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }

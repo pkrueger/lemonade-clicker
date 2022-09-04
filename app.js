@@ -18,7 +18,7 @@ let upgrades = {
     {
       name: "new flavor",
       quantity: 0,
-      cashValue: 2,
+      cashValue: 4,
       cost: 20,
     },
   ],
@@ -43,12 +43,58 @@ let upgrades = {
   },
 };
 
+// Returns upgrade object
+function findUpgrade(nameOfUpgrade) {
+  let listOfUpgrades = [...upgrades.clickUpgrades, ...upgrades.autoUpgrades];
+  return listOfUpgrades.find((u) => u.name == nameOfUpgrade);
+}
+
 //Globals for selecting elements
-let moneyElem = document.getElementById("amountOfMoney");
+let cashElem = document.getElementById("amountOfMoney");
+let cashPerClickElem = document.getElementById("cashPerClick");
+let cashPerIntervalElem = document.getElementById("cashPerInterval");
+let progressBarElem = document.getElementById("progressBar");
+
+let juicerQuantityElem = document.getElementById("juicerQuantity");
+let juicerPriceElem = document.getElementById("juicerPrice");
+let juicerValueElem = document.getElementById("juicerValue");
+
+let flavorQuantityElem = document.getElementById("flavorQuantity");
+let flavorPriceElem = document.getElementById("flavorPrice");
+let flavorValueElem = document.getElementById("flavorValue");
+
+let advertisementQuantityElem = document.getElementById(
+  "advertisementQuantity"
+);
+let advertisementPriceElem = document.getElementById("advertisementPrice");
+let advertisementValueElem = document.getElementById("advertisementValue");
+
+let standQuantityElem = document.getElementById("standQuantity");
+let standPriceElem = document.getElementById("standPrice");
+let standValueElem = document.getElementById("standValue");
 
 // Draws updates to the screen
 function update() {
-  moneyElem.innerText = money.cash;
+  cashElem.innerText = money.cash;
+  cashPerClickElem.innerText = money.cashPerClick;
+  cashPerIntervalElem.innerText = money.cashPerInterval;
+
+  juicerQuantityElem.innerText = findUpgrade("extra juicer").quantity;
+  juicerPriceElem.innerText = findUpgrade("extra juicer").cost;
+  juicerValueElem.innerText = findUpgrade("extra juicer").cashValue;
+
+  flavorQuantityElem.innerText = findUpgrade("new flavor").quantity;
+  flavorPriceElem.innerText = findUpgrade("new flavor").cost;
+  flavorValueElem.innerText = findUpgrade("new flavor").cashValue;
+
+  advertisementQuantityElem.innerText = findUpgrade("advertisement").quantity;
+  advertisementPriceElem.innerText = findUpgrade("advertisement").cost;
+  advertisementValueElem.innerText =
+    findUpgrade("advertisement").cashPerIntervalValue;
+
+  standQuantityElem.innerText = findUpgrade("open new stand").quantity;
+  standPriceElem.innerText = findUpgrade("open new stand").cost;
+  standValueElem.innerText = findUpgrade("open new stand").cashPerIntervalValue;
 }
 
 // Click function
@@ -64,10 +110,9 @@ function autoMoneyGet() {
 
 // Buys upgrades
 function buyUpgrade(nameOfUpgrade) {
-  let listOfUpgrades = [...upgrades.clickUpgrades, ...upgrades.autoUpgrades];
-  let upgrade = listOfUpgrades.find((u) => u.name == nameOfUpgrade);
+  let upgrade = findUpgrade(nameOfUpgrade);
 
-  if (money.cash > upgrade.cost) {
+  if (money.cash >= upgrade.cost) {
     upgrade.quantity++;
     money.cash -= upgrade.cost;
 
@@ -75,11 +120,25 @@ function buyUpgrade(nameOfUpgrade) {
       money.cashPerClick += upgrade.cashValue;
     } else {
       money.cashPerInterval += upgrade.cashPerIntervalValue;
+      activateInterval();
     }
     upgrade.cost = Math.round((upgrade.cost *= 1.5));
     update();
   }
-  console.log(money);
+  update();
 }
 
-setInterval(autoMoneyGet, 3000);
+function activateInterval() {
+  if (!progressBarElem.classList.contains("interval-progress-bar")) {
+    progressBarElem.classList.add("interval-progress-bar");
+  }
+}
+
+progressBarElem.addEventListener("animationiteration", (event) => {
+  autoMoneyGet();
+});
+
+update();
+
+// Go Corporate button needs to remove hidden class from the button and
+//  add padding to corporate button

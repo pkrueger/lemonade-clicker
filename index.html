@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/c01e6e9bae.js"
+      crossorigin="anonymous"
+    ></script>
     <link href="bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="bootstrap-5.2.0-dist/js/bootstrap.min.js" defer></script>
     <link
@@ -16,13 +20,17 @@
     <title>Lemonade Clicker</title>
   </head>
   <body>
-    <header>
-      <h1>Lemonade Clicker</h1>
+    <header class="py-3 py-md-5">
+      <h1 class="text-center py-md-5">Lemonade Clicker</h1>
     </header>
-    <main>
-      <section class="container game-container">
-        <div class="row">
-          <div class="col-md-4">
+
+    <main class="px-3">
+      <!-- SECTION GAME -->
+      <section
+        class="container game-container d-flex flex-column justify-content-between"
+      >
+        <div class="row justify-content-center">
+          <div class="col-9 col-md-4 pb-4 pb-md-5">
             <img
               src="assets/stand.png"
               alt="Your lemonade stand"
@@ -31,13 +39,106 @@
             />
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <p>$<span id="amountOfMoney">0</span></p>
+        <!-- NOTE MONEY DISPLAY -->
+        <div class="row justify-content-center align-items-end cash-display">
+          <div class="col-md-2">
+            <div class="cash-per-click d-flex align-items-center">
+              <div
+                class="d-flex justify-content-between w-100 align-items-center"
+              >
+                <div>+<span id="cashPerClick">1</span></div>
+                <i class="fa-solid fa-computer-mouse"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div
+              class="amount-of-money d-flex align-items-center justify-content-center"
+            >
+              <h2 class="mb-0">$<span id="amountOfMoney">0</span></h2>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="cash-per-interval d-flex align-items-center">
+              <div
+                class="d-flex justify-content-between w-100 gap-2 align-items-center"
+              >
+                <i class="fa-solid fa-stopwatch"></i>
+                <div class="empty-progress-bar">
+                  <div id="progressBar" class=""></div>
+                </div>
+                <div>+<span id="cashPerInterval">0</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION BUTTON AREA -->
+        <div class="row justify-content-center">
+          <!-- NOTE CLICKER UPGRADES-->
+          <div class="col-md-8 upgrades-container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="upgrade">
+                  <span id="juicerQuantity" class="quantity">0</span>
+                  <button id="extraJuicer" onclick="buyUpgrade('extra juicer')">
+                    $<span id="juicerPrice"></span>
+                  </button>
+                  <div class="upgrade-info">
+                    <h5>Extra Juicer</h5>
+                    <h5>+<span id="juicerValue"></span></h5>
+                  </div>
+                </div>
+
+                <div class="upgrade mb-0">
+                  <span id="flavorQuantity" class="quantity">0</span>
+                  <button id="newFlavor" onclick="buyUpgrade('new flavor')">
+                    $<span id="flavorPrice"></span>
+                  </button>
+                  <div class="upgrade-info">
+                    <h5>New Flavor</h5>
+                    <h5>+ <span id="flavorValue"></span></h5>
+                  </div>
+                </div>
+              </div>
+
+              <!-- NOTE AUTO UPGRADES -->
+              <div class="col-md-6">
+                <div class="upgrade justify-content-end text-end">
+                  <div class="upgrade-info">
+                    <h5>Advertisement</h5>
+                    <h5>+<span id="advertisementValue"></span></h5>
+                  </div>
+                  <button
+                    id="advertisement"
+                    onclick="buyUpgrade('advertisement')"
+                  >
+                    $<span id="advertisementPrice"></span>
+                  </button>
+                  <span id="advertisementQuantity" class="quantity">0</span>
+                </div>
+
+                <div class="upgrade mb-0 justify-content-end text-end">
+                  <div class="upgrade-info">
+                    <h5>New Stand</h5>
+                    <h5>+<span id="standValue"></span></h5>
+                  </div>
+                  <button
+                    id="openNewStand"
+                    onclick="buyUpgrade('open new stand')"
+                  >
+                    $<span id="standPrice"></span>
+                  </button>
+                  <span id="standQuantity" class="quantity">0</span>
+                </div>
+              </div>
+              <div class="col">
+                <button class="w-100 hidden">Go Corporate</button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </main>
-    <footer></footer>
   </body>
 </html>
