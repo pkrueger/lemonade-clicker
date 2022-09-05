@@ -106,6 +106,10 @@ button:focus {
   border: 0.15rem solid var(--theme-primary);
 }
 
+#goCorporate {
+  margin-top: 2rem;
+}
+
 .hidden {
   display: none;
 }

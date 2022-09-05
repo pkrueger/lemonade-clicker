@@ -46,6 +46,7 @@ let upgrades = {
   ],
   goCorporate: {
     name: "corporate sponsorship",
+    quantity: 0,
     available: 0,
     multiplier: 1,
     cost: 100,
@@ -83,6 +84,7 @@ const upgradesDefault = {
   ],
   goCorporate: {
     name: "corporate sponsorship",
+    quantity: 0,
     available: 0,
     multiplier: 1,
     cost: 100,
@@ -120,11 +122,15 @@ let standQuantityElem = document.getElementById("standQuantity");
 let standPriceElem = document.getElementById("standPrice");
 let standValueElem = document.getElementById("standValue");
 
+let goCorporateElem = document.getElementById("goCorporate");
+let corporatePrice;
+
 // Draws updates to the screen
 function update() {
   cashElem.innerText = money.cash;
   cashPerClickElem.innerText = money.cashPerClick;
-  cashPerIntervalElem.innerText = money.cashPerInterval;
+  cashPerIntervalElem.innerText =
+    money.cashPerInterval * upgrades.goCorporate.multiplier;
   totalCashElem.innerText = money.totalCash;
 
   juicerQuantityElem.innerText = findUpgrade("extra juicer").quantity;
@@ -138,12 +144,16 @@ function update() {
   advertisementQuantityElem.innerText = findUpgrade("advertisement").quantity;
   advertisementPriceElem.innerText = findUpgrade("advertisement").cost;
   advertisementValueElem.innerText =
-    findUpgrade("advertisement").cashPerIntervalValue;
+    findUpgrade("advertisement").cashPerIntervalValue *
+    upgrades.goCorporate.multiplier;
 
   standQuantityElem.innerText = findUpgrade("open new stand").quantity;
   standPriceElem.innerText = findUpgrade("open new stand").cost;
-  standValueElem.innerText = findUpgrade("open new stand").cashPerIntervalValue;
+  standValueElem.innerText =
+    findUpgrade("open new stand").cashPerIntervalValue *
+    upgrades.goCorporate.multiplier;
 
+  trackAvailableCorporate();
   saveLemonade();
 }
 
@@ -178,8 +188,10 @@ function getThatGreen() {
 }
 
 function autoMoneyGet() {
-  money.cash += money.cashPerInterval;
-  money.totalCash += money.cashPerInterval;
+  money.cash += money.cashPerInterval * upgrades.goCorporate.multiplier;
+  money.totalCash += money.cashPerInterval * upgrades.goCorporate.multiplier;
+  Math.round(money.cash);
+  Math.round(money.totalCash);
   update();
 }
 
@@ -198,7 +210,6 @@ function buyUpgrade(nameOfUpgrade) {
       activateInterval();
     }
     upgrade.cost = Math.round((upgrade.cost *= 1.5));
-    update();
   }
   update();
 }
@@ -218,18 +229,29 @@ function countUpgrades() {
   let upgradeCounter = 0;
 
   for (upgrade of listOfUpgrades) {
-    if (upgrade.quantity > 0) {
-      upgradeCounter++;
-    }
+    upgradeCounter += upgrade.quantity;
   }
   return upgradeCounter;
 }
 
-function goCorporate() {
+function trackAvailableCorporate() {
   let upgradeCounter = countUpgrades();
 
-  if (upgradeCounter % 10 == 0) {
-    upgrades.goCorporate.available++;
+  upgrades.goCorporate.available = Math.floor(upgradeCounter / 10);
+
+  if (upgrades.goCorporate.available > upgrades.goCorporate.quantity) {
+    goCorporateElem.classList.remove("hidden");
+  } else {
+    goCorporateElem.classList.add("hidden");
+  }
+}
+
+function buyCorporate() {
+  if (money.cash >= upgrades.goCorporate.cost) {
+    money.cash -= upgrades.goCorporate.cost;
+    upgrades.goCorporate.quantity++;
+    upgrades.goCorporate.multiplier++;
+    update();
   }
 }
 
