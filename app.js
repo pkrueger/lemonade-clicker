@@ -103,6 +103,7 @@ let cashPerClickElem = document.getElementById("cashPerClick");
 let cashPerIntervalElem = document.getElementById("cashPerInterval");
 let progressBarElem = document.getElementById("progressBar");
 let totalCashElem = document.getElementById("totalCash");
+let standImgElem = document.getElementById("standImg");
 
 let juicerQuantityElem = document.getElementById("juicerQuantity");
 let juicerPriceElem = document.getElementById("juicerPrice");
@@ -123,7 +124,7 @@ let standPriceElem = document.getElementById("standPrice");
 let standValueElem = document.getElementById("standValue");
 
 let goCorporateElem = document.getElementById("goCorporate");
-let corporatePrice;
+let corporatePriceElem = document.getElementById("corporatePrice");
 
 // Draws updates to the screen
 function update() {
@@ -153,8 +154,32 @@ function update() {
     findUpgrade("open new stand").cashPerIntervalValue *
     upgrades.goCorporate.multiplier;
 
+  corporatePriceElem.innerText = upgrades.goCorporate.cost;
+
+  glowUpImage();
   trackAvailableCorporate();
   saveLemonade();
+}
+
+function glowUpImage() {
+  if (upgrades.goCorporate.quantity) {
+    standImgElem.src = "assets/store.png";
+  } else {
+    standImgElem.src = "assets/stand.png";
+  }
+
+  if (upgrades.goCorporate.quantity > 3) {
+    standImgElem.style.filter =
+      "drop-shadow(0 -0.5rem 1rem var(--theme-secondary-darker))";
+  } else if (upgrades.goCorporate.quantity == 3) {
+    standImgElem.style.filter =
+      "drop-shadow(0 -0.5rem 1rem var(--theme-secondary))";
+  } else if (upgrades.goCorporate.quantity == 2) {
+    standImgElem.style.filter =
+      "drop-shadow(0 -0.5rem 1rem var(--theme-tertiary))";
+  } else {
+    standImgElem.style.filter = "";
+  }
 }
 
 function saveLemonade() {
