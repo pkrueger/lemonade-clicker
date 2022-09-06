@@ -2,7 +2,7 @@
 
 // Globals
 let money = {
-  cash: 0,
+  cash: 5000000,
   totalCash: 0,
   cashPerClick: 1,
   cashPerInterval: 0,
@@ -282,8 +282,8 @@ function buyCorporate() {
 }
 
 function reset() {
-  money = { ...moneyDefault };
-  upgrades = { ...upgradesDefault };
+  money = structuredClone(moneyDefault);
+  upgrades = structuredClone(upgradesDefault);
   progressBarElem.classList.remove("interval-progress-bar");
   update();
 }

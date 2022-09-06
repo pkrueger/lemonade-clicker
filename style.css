@@ -32,7 +32,8 @@ body {
   user-select: none;
 }
 
-.cash-display > .col-md-2 {
+.cash-display > .col-md-2,
+.cash-display > .col-md-3 {
   padding: 0;
 }
 
