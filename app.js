@@ -21,13 +21,13 @@ let upgrades = {
       name: "extra juicer",
       quantity: 0,
       cashValue: 1,
-      cost: 20,
+      cost: 100,
     },
     {
       name: "new flavor",
       quantity: 0,
       cashValue: 4,
-      cost: 20,
+      cost: 1000,
     },
   ],
   autoUpgrades: [
@@ -35,13 +35,13 @@ let upgrades = {
       name: "advertisement",
       quantity: 0,
       cashPerIntervalValue: 1,
-      cost: 20,
+      cost: 200,
     },
     {
       name: "open new stand",
       quantity: 0,
       cashPerIntervalValue: 4,
-      cost: 20,
+      cost: 2000,
     },
   ],
   goCorporate: {
@@ -49,7 +49,7 @@ let upgrades = {
     quantity: 0,
     available: 0,
     multiplier: 1,
-    cost: 100,
+    cost: 10000,
   },
 };
 
@@ -59,13 +59,13 @@ const upgradesDefault = {
       name: "extra juicer",
       quantity: 0,
       cashValue: 1,
-      cost: 20,
+      cost: 100,
     },
     {
       name: "new flavor",
       quantity: 0,
       cashValue: 4,
-      cost: 20,
+      cost: 1000,
     },
   ],
   autoUpgrades: [
@@ -73,13 +73,13 @@ const upgradesDefault = {
       name: "advertisement",
       quantity: 0,
       cashPerIntervalValue: 1,
-      cost: 20,
+      cost: 200,
     },
     {
       name: "open new stand",
       quantity: 0,
       cashPerIntervalValue: 4,
-      cost: 20,
+      cost: 2000,
     },
   ],
   goCorporate: {
@@ -87,7 +87,7 @@ const upgradesDefault = {
     quantity: 0,
     available: 0,
     multiplier: 1,
-    cost: 100,
+    cost: 10000,
   },
 };
 
@@ -249,6 +249,7 @@ function trackAvailableCorporate() {
 function buyCorporate() {
   if (money.cash >= upgrades.goCorporate.cost) {
     money.cash -= upgrades.goCorporate.cost;
+    upgrades.goCorporate.cost *= 1.5;
     upgrades.goCorporate.quantity++;
     upgrades.goCorporate.multiplier++;
     update();
