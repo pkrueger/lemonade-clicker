@@ -2,7 +2,7 @@
 
 // Globals
 let money = {
-  cash: 5000000,
+  cash: 0,
   totalCash: 0,
   cashPerClick: 1,
   cashPerInterval: 0,
